@@ -1,5 +1,7 @@
 # строки начинающиеся на # - это комментарии, они не учитываются
 .vscode/*
+.ipynb_checkpoints/*
+.virtual_documents/*
 img-rpi/*
 __pycache__/*
 *.code-workspace
