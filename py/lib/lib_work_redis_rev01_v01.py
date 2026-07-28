@@ -7,7 +7,7 @@ import json
 def ConnectDB() -> object:
 
     # Выполнить подключение к базе данных Redis
-    connect_db = redis.Redis( host='localhost', port=6379, db=0 )
+    connect_db = redis.Redis( host='rpi03.lan', port=6379, db=0 )#Изменено
     
     return connect_db
 
