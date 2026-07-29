@@ -4,10 +4,10 @@ import json
 '''
     Функция 'ConnectDB' выполняет подключение к БД Redis и возвращает активное соединение.
 '''
-def ConnectDB() -> object:
+def ConnectDB(_host) -> object:
 
     # Выполнить подключение к базе данных Redis
-    connect_db = redis.Redis( host='rpi03.lan', port=6379, db=0 )#Изменено
+    connect_db = redis.Redis( host=_host, port=6379, db=0 ) #Изменено
     
     return connect_db
 
