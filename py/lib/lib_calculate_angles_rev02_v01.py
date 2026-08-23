@@ -79,6 +79,8 @@ class CalculateAngles:
 
         self.Isr        = 137 # default, частота семплирования пакетного считывания данных со всех трех сенсоров IMU
 
+        self.max_angle  = 360 # default,  максимальный возможный угол
+
         self.TempSensitivity = 333.87  # константа необходимая для расчета температуры в цельсиях
         self.TempOffset      = 0       # константа хранит калибровочное смещение термометра
 
@@ -205,6 +207,11 @@ class CalculateAngles:
         self.AccArrAngle[ROLL_IND].append(math.degrees(math.atan2(self.AccArrRaw[Y_IND][-1], self.AccArrRaw[Z_IND][-1])))
         self.AccArrAngle[PITCH_IND].append(math.degrees(math.atan2(self.AccArrRaw[X_IND][-1], self.AccArrRaw[Z_IND][-1])))
         
+        # Перевести углы в диапазон [0;360]
+        self.AccArrAngle[ROLL_IND][-1]  = self.AccArrAngle[ROLL_IND][-1]%self.max_angle
+        self.AccArrAngle[PITCH_IND][-1] = self.AccArrAngle[PITCH_IND][-1]%self.max_angle
+
+        
         # Отслеживать размер массива 'сырых' данных
         if len(self.AccArrAngle[ROLL_IND]) > self.LimDataArr:
             self.AccArrAngle[ROLL_IND].pop(0)
@@ -214,6 +221,12 @@ class CalculateAngles:
         self.GyrArrAngle[ROLL_IND].append( self.GyrArrAngle[ROLL_IND][-1] + self.GyrArrRaw[X_IND][-1] * dt)
         self.GyrArrAngle[PITCH_IND].append( self.GyrArrAngle[PITCH_IND][-1] - self.GyrArrRaw[Y_IND][-1] * dt)
         self.GyrArrAngle[YAW_IND].append( self.GyrArrAngle[YAW_IND][-1] + self.GyrArrRaw[Z_IND][-1] * dt)
+
+        # Перевести углы в диапазон [0;360]
+        self.GyrArrAngle[ROLL_IND][-1]  = self.GyrArrAngle[ROLL_IND][-1]%self.max_angle
+        self.GyrArrAngle[PITCH_IND][-1] = self.GyrArrAngle[PITCH_IND][-1]%self.max_angle
+        self.GyrArrAngle[YAW_IND][-1]   = self.GyrArrAngle[YAW_IND][-1]%self.max_angle
+
         # Отслеживать размер массива 'сырых' данных
         if len(self.GyrArrAngle[ROLL_IND]) > self.LimDataArr:
             self.GyrArrAngle[ROLL_IND].pop(0)
